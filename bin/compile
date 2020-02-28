@@ -55,7 +55,8 @@ if [[ "$update" == "yes" ]]; then
     run_silent "make clean"
 fi
 printlog "Building libsass"
-run_silent "make static"
+#run_silent "make static"
+make static
 
 if [[ -d "$SASSC_DIR/.git" ]]; then
     cd ${SASSC_DIR}
