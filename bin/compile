@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSION="3.3.6"
+VERSION="3.6.1"
 echo "-----> Install sassc v${VERSION}"
 
 BUILD_DIR=$1
