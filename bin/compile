@@ -1,6 +1,7 @@
 #!/bin/bash
 
 VERSION="3.6.1"
+echo "($(uname -a))"
 echo "-----> Install sassc v${VERSION}"
 
 BUILD_DIR=$1
@@ -15,8 +16,12 @@ indent() {
     sed -u 's/^/       /'
 }
 
+timestamp() {
+    date +"%T"
+}
+
 printlog() {
-    echo $1 | indent
+    echo "$(timestamp) " $1 | indent
 }
 
 run_silent() {
@@ -55,8 +60,19 @@ if [[ "$update" == "yes" ]]; then
     run_silent "make clean"
 fi
 printlog "Building libsass"
+echo "-----------" | indent
 #run_silent "make static"
-make static
+#make -d static
+
+while read -r line ; do
+    X=$(echo "$line" | grep "g++")
+    if [[ "$X" != "" ]]; then
+        echo "$(timestamp) $X" | indent
+    fi
+done < <(make -d static)
+
+echo "-----------" | indent
+printlog "Building finished"
 
 if [[ -d "$SASSC_DIR/.git" ]]; then
     cd ${SASSC_DIR}
